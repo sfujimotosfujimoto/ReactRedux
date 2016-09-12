@@ -1,4 +1,4 @@
-import redux, {createStore} from 'redux';
+import redux, {createStore, subscribe, compose} from 'redux';
 
 console.log('Starting redux example');
 
@@ -8,6 +8,7 @@ const stateDefault = {
   todos: []
 }
 
+//-- REDUCER ------
 const reducer = (state = stateDefault, action) => {
   // state = state || {name: 'Anonymous'};
   switch (action.type) {
@@ -21,17 +22,37 @@ const reducer = (state = stateDefault, action) => {
   }
 
 };
+//-- STORE ------
+const store = createStore(reducer, compose(
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+));
 
-const store = createStore(reducer);
+//-- SUBSCRIBE ------
+let unsubscribe = store.subscribe(() => {
+  let state = store.getState();
+
+  console.log('searchText is ', state.searchText);
+  document.getElementById('app').innerHTML = state.searchText;
+})
+// unsubscribe();
+
 
 const currentState = store.getState();
 console.log('currentState', currentState);
 
-const action = {
+
+//-- DISPATCH ACTIONS ------
+store.dispatch({
   type: 'CHANGE_SEARCHTEXT',
   searchText: 'Demo'
-}
+});
 
-store.dispatch(action);
+store.dispatch({
+  type: 'CHANGE_SEARCHTEXT',
+  searchText: 'Work'
+});
 
-console.log('searchText should be Demo', store.getState());
+store.dispatch({
+  type: 'CHANGE_SEARCHTEXT',
+  searchText: 'Play'
+});
