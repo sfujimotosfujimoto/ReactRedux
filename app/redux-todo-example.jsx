@@ -2,7 +2,13 @@ import redux, {createStore} from 'redux';
 
 console.log('Starting redux example');
 
-const reducer = (state = {name: 'Anonymous'}, action) => {
+const defaultState = {
+  searchText: '',
+  showCompleted: false,
+  todos: []
+}
+
+const reducer = (state = defaultState, action) => {
   // state = state || {name: 'Anonymous'};
 
   return state;
