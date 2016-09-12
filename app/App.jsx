@@ -14,3 +14,5 @@ ReactDOM.render(
   ,
   document.getElementById('app')
 );
+
+import './redux-example';
