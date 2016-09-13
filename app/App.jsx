@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 
-
-
 $(document).foundation();
 
 // app css
@@ -15,5 +13,5 @@ require('style!css!sass!app/styles/app.scss');
 //   document.getElementById('app')
 // );
 
-// import './redux-example';
-import './redux-todo-example';
+import './redux-example';
+// import './redux-todo-example';
