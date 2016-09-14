@@ -67,6 +67,14 @@ let nameReducer = (state = 'Anonymous', action) => {
   }
 };
 
+//-- Action Generator ------
+let changeName = (name) => {
+  return {
+    type: 'CHANGE_NAME',
+    name
+  }
+}
+
 let hobbiesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_HOBBY':
@@ -83,6 +91,21 @@ let hobbiesReducer = (state = [], action) => {
       return state;
   }
 };
+
+//-- Action Generator ------
+let addHobby = (hobby) => {
+  return {
+    type: 'ADD_HOBBY',
+    hobby
+  }
+}
+
+let removeHobby = (id) => {
+  return {
+    type: 'REMOVE_HOBBY',
+    id
+  }
+}
 
 let moviesReducer = (state = [], action) => {
   switch (action.type) {
@@ -102,6 +125,21 @@ let moviesReducer = (state = [], action) => {
   }
 };
 
+//-- Action Generator ------
+let addMovie = (title, genre) => {
+  return {
+    type: 'ADD_MOVIE',
+    title,
+    genre
+  }
+}
+
+let removeMovie = (id) => {
+  return {
+    type: 'REMOVE_MOVIE',
+    id
+  }
+}
 
 const reducer = combineReducers({
   name: nameReducer,
@@ -131,44 +169,13 @@ let unsubscribe = store.subscribe(() => {
 const currentState = store.getState();
 console.log('currentState', currentState);
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Andrew'
-});
+store.dispatch(changeName('Andrew'));
 
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Running'
-});
+store.dispatch(addHobby('Running'));
 
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Walking'
-});
+store.dispatch(addHobby('Walking'));
+store.dispatch(removeHobby(2));
 
-store.dispatch({
-  type: 'REMOVE_HOBBY',
-  id: 2
-});
-
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Emily'
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  title: 'Shin Godzilla',
-  genre: 'action'
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  title: 'Seven',
-  genre: 'suspense'
-});
-
-store.dispatch({
-  type: 'REMOVE_MOVIE',
-  id: 1
-});
+store.dispatch(addMovie('Mad Max', 'Action'));
+store.dispatch(addMovie('Star Wars', 'Action'));
+store.dispatch(removeMovie(1));
