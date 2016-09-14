@@ -1,7 +1,8 @@
-import redux, {createStore, subscribe, compose} from 'redux';
+import redux, {createStore, subscribe, compose, combineReducers} from 'redux';
 
 console.log('Starting redux example');
 
+//-- DEFAULT STATE ------
 let stateDefault = {
   name: 'Anonymous',
   hobbies: [],
@@ -11,7 +12,7 @@ let nextHobbyId = 1;
 let nextMovieId = 1;
 
 //-- REDUCER ------
-const reducer = (state = stateDefault, action) => {
+const oldreducer = (state = stateDefault, action) => {
   // state = state || {name: 'Anonymous'};
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -57,6 +58,56 @@ const reducer = (state = stateDefault, action) => {
   }
 };
 
+let nameReducer = (state = 'Anonymous', action) => {
+  switch (action.type) {
+    case 'CHANGE_NAME':
+      return action.name
+    default:
+      return state;
+  }
+};
+
+let hobbiesReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_HOBBY':
+      return [
+          ...state,
+          {
+            id: nextHobbyId++,
+            hobby: action.hobby
+          }
+        ]
+    case 'REMOVE_HOBBY':
+      return state.filter((hobby) => hobby.id !== action.id)
+    default:
+      return state;
+  }
+};
+
+let moviesReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_MOVIE':
+      return [
+        ...state,
+        {
+          id: nextMovieId++,
+          title: action.title,
+          genre: action.genre
+        }
+      ]
+    case 'REMOVE_MOVIE':
+      return state.filter((movie) => movie.id !== action.id)
+    default:
+      return state;
+  }
+};
+
+
+const reducer = combineReducers({
+  name: nameReducer,
+  hobbies: hobbiesReducer,
+  movies: moviesReducer
+})
 
 
 //-- STORE ------
